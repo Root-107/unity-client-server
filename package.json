@@ -1,0 +1,11 @@
+{
+    "name": "com.justbadcode.serverclient",
+    "version": "0.0.1",
+    "displayName": "Unity Server Client",
+    "description": "Server client",
+    "unity": "2020.3",
+    "author": {
+        "name": "Sam Pugh",
+        "url": "https://github.com/Root-107"
+    }
+}
