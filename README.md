@@ -2,16 +2,18 @@
 Creating a server and client instance.
 
 ## Table of Contents
-- [Setup](#Setup)
-    - [Server](#Server)
-    - [Client](#Client)
-    - [Packets and Handlers](#packets-and-handlers)
-        - [Example Packets](#example-packets)
-    - [Avalable Events](#avalable-events)
+- [Client Server](#client-server)
+  - [Table of Contents](#table-of-contents)
+- [Setup](#setup)
+  - [Sever](#sever)
+  - [Client](#client)
+  - [Packets and Handlers](#packets-and-handlers)
+    - [Example packets](#example-packets)
+  - [Avalable Events](#avalable-events)
 - [Sending Messages](#sending-messages)
-    - [Examples](#examples)
-- [Handeling Messages](#handeling-messages)
-    - [Example](#example)
+  - [Examples](#examples)
+- [Handling Messages](#handling-messages)
+  - [Example](#example)
 
 # Setup
 ## Sever
@@ -27,6 +29,7 @@ ServerClient.CreateClient(new ClientSettings(string token, Action onClientReady,
 
 ## Packets and Handlers
 Packets are handled by reading the int value stored in the packet, this is the last value writen before it is sent, this should be managed by en enum value.
+Packed 1000 and 2000 are reserved for connect and disconnect.
 ```csharp
 public enum AppPackets
 {
@@ -35,7 +38,7 @@ public enum AppPackets
     ItemPosition = 3
 }
 ```
-Send Packet `(int)AppPackets.SpawnItem` => then gets passed to its asociated handerler.
+Send Packet `(int)AppPackets.SpawnItem` => then gets passed to its associated handler.
 
 ### Example packets
 ```csharp
@@ -70,7 +73,7 @@ private void HandleClientDisconnect(int client)
 ```
 
 # Sending Messages
-Create a new class that will contain static methouds. In there add `using ClientServer.Sending;`
+Create a new class that will contain static methods. In there add `using ClientServer.Sending;`
 
 This will alow you to use the `ClientSend` and `ServerSend` classes.
 
@@ -97,7 +100,7 @@ public static void RequestSpawnItem(string item, Vector3 positon, Vector3 rotati
     using (Packet packet = new Packet((int)AppPackets.SpawnItem)) 
     {
         packet.Write(item);
-        packet.Write(positon);
+        packet.Write(position);
         packet.Write(rotation);
 
         ClientSend.SendTCPData(packet);
@@ -105,8 +108,8 @@ public static void RequestSpawnItem(string item, Vector3 positon, Vector3 rotati
 }
 ```
 
-# Handeling Messages
-Messages will be passed to the methouds defined in the server and client packets.
+# Handling Messages
+Messages will be passed to the methods defined in the server and client packets.
 
 ## Example
 Client packet
@@ -114,7 +117,7 @@ Client packet
 {(int)AppPackets.SpawnItem, ClientHandle.SpawnItem},
 ```
 
-Handeler Methoud
+Handler Method
 ```csharp
 public static void SpawnItem(Packet packet)
 {
