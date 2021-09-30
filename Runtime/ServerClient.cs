@@ -9,7 +9,8 @@ public class ServerSettings
     public int maxPlayers;
     public int frameRate;
     public string token;
-    public int port;
+    public int tcpPort;
+    public int udpPort;
     public Action<int> onConnect;
     public Action<int> onDisconect;
     public Dictionary<int, Server.PacketHandler> packets;
@@ -19,18 +20,21 @@ public class ServerSettings
     /// </summary>
     /// <param name="maxPlayers">Max clients that can join the server</param>
     /// <param name="frameRate">Fixed frame rate the server will run at</param>
-    /// <param name="port">Port the server will run on</param>
+    /// <param name="tcpPort">Port the server will run on</param>
+    /// <param name="udpPort">Port the server will run on</param>
     /// <param name="packets">Values the server will use to determin message handelers</param>
     public ServerSettings(
         int maxPlayers = 20, 
         int frameRate = 30, 
-        int port = 8080, 
+        int tcpPort = 8080, 
+        int udpPort = 8081,
         Dictionary<int, Server.PacketHandler> packets = null,
         string token = "")
     {
         this.maxPlayers = maxPlayers;
         this.frameRate = frameRate;
-        this.port = port;
+        this.tcpPort = tcpPort;
+        this.udpPort = udpPort;
         this.packets = packets;
         this.token = token;
     }
@@ -89,7 +93,7 @@ public static class ServerClient
         isServer = true;
         CreateThreadManager();
         new GameObject("NetworkManager").AddComponent<NetworkManager>();
-        NetworkManager.instance.InitialiseServer(settings.maxPlayers, settings.frameRate, settings.port);
+        NetworkManager.instance.InitialiseServer(settings.maxPlayers, settings.frameRate, settings.tcpPort, settings.udpPort);
 
         if (settings.packets != null)
         {
@@ -159,9 +163,9 @@ public static class ServerClient
     /// <param name="ip"></param>
     /// <param name="port"></param>
     /// <param name="connectionCallback">If the connection times out will pass back false</param>
-    public static void ConnectToServer(string ip, int port, Action<bool> connectionCallback = null)
+    public static void ConnectToServer(string ip, int tcpPort, int udpPort, Action<bool> connectionCallback = null)
     {
-        client.ConnectedToServer(ip, port, connectionCallback);
+        client.ConnectedToServer(ip, tcpPort, udpPort, connectionCallback);
     }
 
     public static void DisconnectFromServer(string message = "") 

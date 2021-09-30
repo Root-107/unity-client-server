@@ -19,7 +19,8 @@ namespace ClientServer
 
         public int id;
         public string ip = "80.193.23.116";
-        public int port = 8080;
+        public int tcpPort = 8580;
+        public int udpPort = 8581;
 
         public TCP tcp;
         public UDP udp;
@@ -113,10 +114,11 @@ namespace ClientServer
             onDisconnect?.Invoke();
         }
 
-        public void ConnectedToServer(string ip = "", int port = 0, Action<bool> connectionCallback = null)
+        public void ConnectedToServer(string ip = "", int tcpPort = 0, int udpPort = 0, Action<bool> connectionCallback = null)
         {
             this.ip = ip;
-            this.port = port;
+            this.tcpPort = tcpPort;
+            this.udpPort = udpPort;
             this.connectionCallback = connectionCallback;
 
             tcp = new TCP();
@@ -145,7 +147,7 @@ namespace ClientServer
                 };
 
                 receiveBuffer = new byte[dataBufferSize];
-                socket.BeginConnect(instance.ip, instance.port, ConnectCallback, socket);
+                socket.BeginConnect(instance.ip, instance.tcpPort, ConnectCallback, socket);
             }
 
             private void ConnectCallback(IAsyncResult ar)
@@ -274,7 +276,7 @@ namespace ClientServer
 
             public UDP()
             {
-                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.port);
+                endPoint = new IPEndPoint(IPAddress.Parse(instance.ip), instance.udpPort);
             }
 
             public void Connect(int localPort)

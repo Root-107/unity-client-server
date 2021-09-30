@@ -10,7 +10,8 @@ namespace ClientServer
     public class Server
     {
         public static int MaxPlayers { get; private set; }
-        public static int Port { get; private set; }
+        public static int TcpPort { get; private set; }
+        public static int UdpPort { get; private set; }
         public static Dictionary<int, ServerClientInstance> clients = new Dictionary<int, ServerClientInstance>();
         public delegate void PacketHandler(int client, Packet packet);
 
@@ -24,22 +25,23 @@ namespace ClientServer
         public static Action<int> OnDisconnect;
         private static string token = "";
 
-        public static void Start(int maxPlayers, int port)
+        public static void Start(int maxPlayers, int tcpPort, int udpPort)
         {
             //When starting server set the max players and the port
             MaxPlayers = maxPlayers;
-            Port = port;
+            TcpPort = tcpPort;
+            UdpPort = udpPort;
             InitaliseServerData();
 
             //create a new TCP listener
-            tcpListener = new TcpListener(IPAddress.Any, Port);
+            tcpListener = new TcpListener(IPAddress.Any, TcpPort);
             tcpListener.Start();
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            udpListener = new UdpClient(port);
+            udpListener = new UdpClient(UdpPort);
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
-            Debug.Log($"Sever started on port {Port}...");
+            Debug.Log($"Sever started on TCP:{TcpPort}, UDP:{UdpPort}...");
         }
 
         //Stores the tcp client instance then starts the listen again.
@@ -86,7 +88,7 @@ namespace ClientServer
                 DisconnectClient(c.Key);
             }
 
-            Debug.Log($"Closing server on port {Port}...");
+            Debug.Log($"Closing server on TCP:{TcpPort}, UDP:{UdpPort}...");
         }
 
         private static void UDPReceiveCallback(IAsyncResult ar)

@@ -1,6 +1,6 @@
 {
     "name": "com.justbadcode.serverclient",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "displayName": "Unity Server Client",
     "description": "Server client",
     "unity": "2020.3",

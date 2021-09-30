@@ -64,6 +64,6 @@ public class Main : MonoBehaviour
             //...
         };
 
-        ServerClient.CreateServer(new ServerSettings(maxPlayers, serverFrameRate, port, handler, connectionToken));
+        ServerClient.CreateServer(new ServerSettings(maxPlayers, serverFrameRate, tcpPort, udpPort, handler, connectionToken));
     }
 }
