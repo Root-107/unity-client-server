@@ -89,7 +89,7 @@ public static class ServerClient
         isServer = true;
         CreateThreadManager();
         new GameObject("NetworkManager").AddComponent<NetworkManager>();
-        NetworkManager.instance.InitaliseServer(settings.maxPlayers, settings.frameRate, settings.port);
+        NetworkManager.instance.InitialiseServer(settings.maxPlayers, settings.frameRate, settings.port);
 
         if (settings.packets != null)
         {
@@ -124,14 +124,13 @@ public static class ServerClient
         client.OnDisconnect = settings.onDisconnect;
         client.OnClientReady = settings.onClientReady;
 
-        client.InitaliseClientData();
+        client.InitialiseClientData();
 
         if (settings.packets != null)
         {
             Dictionary<int, Client.PacketHandler> packets = CheckPackets(settings.packets);
             client.CreateClientPackets(packets);
         }
-
     }
 
     private static Dictionary<int, T> CheckPackets<T>(Dictionary<int, T> packets) 

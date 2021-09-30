@@ -1,11 +1,18 @@
 {
     "name": "com.justbadcode.serverclient",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "displayName": "Unity Server Client",
     "description": "Server client",
     "unity": "2020.3",
     "author": {
         "name": "Sam Pugh",
         "url": "https://github.com/Root-107"
-    }
+    },
+    "samples" : [
+        {
+            "displayName" : "Basic Setup",
+            "description" : "A basic set up, build the server in server mode, and should give a basic connection",
+            "path" : "Samples~/Basic Setup"
+        }
+    ]
 }

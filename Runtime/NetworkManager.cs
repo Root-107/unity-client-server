@@ -20,7 +20,7 @@ namespace ClientServer
             }
         }
 
-        public void InitaliseServer(int maxPlayers, int frameRate, int port)
+        public void InitialiseServer(int maxPlayers, int frameRate, int port)
         {
             Application.targetFrameRate = frameRate;
             Server.Start(maxPlayers, port);

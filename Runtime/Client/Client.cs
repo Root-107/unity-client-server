@@ -361,7 +361,7 @@ namespace ClientServer
             }
         }
 
-        public void InitaliseClientData()
+        public void InitialiseClientData()
         {
             packetHandler = new Dictionary<int, PacketHandler>()
             {

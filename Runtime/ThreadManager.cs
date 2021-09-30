@@ -38,7 +38,7 @@ namespace ClientServer
         }
 
         /// <summary>Executes all code meant to run on the main thread. NOTE: Call this ONLY from the main thread.</summary>
-        public static void UpdateMain()
+        private static void UpdateMain()
         {
             if (actionToExecuteOnMainThread)
             {
