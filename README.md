@@ -19,7 +19,7 @@ Creating a server and client instance.
 ## Sever
 All variables passed into ServerSettings have default values.
 ```csharp
-ServerClient.CreateServer(new ServerSettings(int maxPlayers, int frameRate, int port, Dictionary<int, Server.PacketHandler> packets));
+ServerClient.CreateServer(new ServerSettings(int maxPlayers, int frameRate, int tcpPort, int udpPort, Dictionary<int, Server.PacketHandler> packets));
 ```
 
 ## Client
